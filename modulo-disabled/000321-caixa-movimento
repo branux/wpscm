@@ -1,0 +1,715 @@
+<?php 
+/*
+md000321-caixa-movimento.php
+
+
+*/
+add_action( 'parse_request', 'md000321_parse_request');
+register_activation_hook( SCM_PATH.'/wpmsc.php', 'md000321_create_module' );
+register_deactivation_hook( SCM_PATH.'/wpmsc.php', "md000321_delete_module" );
+add_shortcode("md000321", "md000321");
+add_shortcode("md000321_saidas", "md000321_saidas");
+add_shortcode("md000321_entradas", "md000321_entradas");
+add_shortcode("md000321_listagem2", "md000321_listagem2");
+add_shortcode("md000321_usuario", "md000321_usuario");
+add_shortcode("md000321_autocadastro", "md000321_autocadastro");
+
+
+function md000321($atts, $content = null) {extract(shortcode_atts(array("md" => '0'), $atts));?>
+<div class="container" style="">
+<div class="row">
+
+
+<div class="container" style="text-transform: uppercase;max-width:1024px;border:0px solid gray;">
+<div class="row">
+<div class="col-md-8 col-md-offset-2" style="border:0px solid gray;">
+<?php echo do_shortcode('[scm_text on_op="nova-entrada"]<h2 class="text-center">NOVA ENTRADA DE CAIXA</h2>[/scm_text]') ?>
+<?php echo do_shortcode('[scm_text on_op="nova-saida"]<h2 class="text-center">NOVA SAÍDA DE CAIXA</h2>[/scm_text]') ?>
+<div style="padding: 100px 20px 0px 20px;">
+<?php echo do_shortcode('[scm_busca]') ?>
+<?php echo do_shortcode('[scm_nnew md=000321 on_op="nova-entrada" un_show="md000321_codigo md000321_data md000321_hora md000321_caixa md000321_saida md000321_valor md000321_es md000321_user"]') ?>
+<?php echo do_shortcode('[scm_nnew md=000321 on_op="nova-saida" un_show="md000321_codigo md000321_data md000321_hora md000321_caixa md000321_entrada md000321_valor md000321_es md000321_user"]') ?>
+</div>
+<?php echo do_shortcode('[scm_insert md=000321 col_fix="md000321_user=__user__" on_op="insert"]') ?>
+<?php echo do_shortcode('[scm_list md=000321 on__op="empty" criterio="md000321_user=__user__" un_show="md000321_codigo md000321_data md000321_hora md000321_caixa md000321_valor md000321_es md000321_user"]') ?>
+<div style="text-align: center;">
+<?php //echo do_shortcode('[scm_botao label="REABRIR" target="?" class="btn"]') ?>
+<br>
+<?php //echo do_shortcode('[scm_botao label="NOVA ENTRADA" target="?op=nova-entrada" class="btn"]') ?>
+<?php //echo do_shortcode('[scm_botao label="NOVA SAIDA" target="?op=nova-saida" class="btn "]') ?>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<?php 
+}
+
+function md000321_entradas($atts, $content = null) {extract(shortcode_atts(array("md" => '0'), $atts));?>
+<div class="container" style="">
+<div class="row">
+
+<div class="container" style="text-transform: uppercase;max-width:1024px;border:0px solid gray;">
+<div class="row">
+<div class="col-md-8 col-md-offset-2" style="border:0px solid gray;">
+<?php echo do_shortcode('[scm_text]<h2 class="text-center">ENTRADAS</h2>[/scm_text]') ?>
+<?php echo do_shortcode('[scm_list md=000321 criterio="md000321_es=e&md000321_user=__user__" un_show="md000321_codigo md000321_data md000321_hora md000321_caixa md000321_valor md000321_saida"]') ?>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<?php 
+}
+
+function md000321_saidas($atts, $content = null) {extract(shortcode_atts(array("md" => '0'), $atts));?>
+<div class="container" style="">
+<div class="row">
+
+<div class="container" style="text-transform: uppercase;max-width:1024px;border:0px solid gray;">
+<div class="row">
+<div class="col-md-8 col-md-offset-2" style="border:0px solid gray;">
+<?php echo do_shortcode('[scm_text]<h2 class="text-center">SAIDAS</h2>[/scm_text]') ?>
+<?php echo do_shortcode('[scm_list md=000321 criterio="md000321_es=s" un_show="md000321_codigo md000321_data md000321_hora md000321_caixa md000321_valor md000321_entradas"]') ?>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<?php 
+}
+
+function md000321_listagem2($atts, $content = null) {extract(shortcode_atts(array("md" => '0'), $atts));?>
+<div class="container" style="">
+<div class="row">
+
+<div class="container" style="text-transform: uppercase;max-width:1024px;border:0px solid gray;">
+<div class="row">
+<div class="col-md-8 col-md-offset-2" style="border:0px solid gray;">
+<?php echo do_shortcode('[scm_text]<h2 class="text-center">LISTAGEM MAIS DETALHADA</h2>[/scm_text]') ?>
+<?php echo do_shortcode('[scm_list md=000321 criterio="md000321_user=__user__" un_show=" md000321_caixa md000321_valor "]') ?>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<?php 
+}
+
+function md000321_usuario($atts, $content = null) {extract(shortcode_atts(array("md" => '0'), $atts));?>
+<div class="container" style="">
+<div class="row">
+
+<div class="container" style="text-transform: uppercase;max-width:1024px;border:0px solid gray;">
+<div class="row">
+<div class="col-md-8 col-md-offset-2" style="border:0px solid gray;">
+<?php echo do_shortcode('[scm_text]<h2 class="text-center">SETTING</h2>[/scm_text]') ?>
+<?php echo do_shortcode('[clean-login]') ?>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<?php 
+}
+
+function md000321_autocadastro() {
+if ( is_user_logged_in() ) return '';
+$user_name = scmGeraSenha(8, false, true, false);
+$user_email = $user_name."@scmwebdev.com";
+$user_id = username_exists( $user_name );
+if ( !$user_id and email_exists($user_email) == false ) {
+  $random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
+  $user_id = wp_create_user( $user_name, $random_password, $user_email );
+  
+  $creds['user_login'] = $user_name;//'teste';//$ret['rows'][0]['i000035_login'];////'teste55';
+  $creds['user_password'] = $random_password;//'teste';//$ret['rows'][0]['i000035_senha'];//'teste123A';
+  $creds['remember'] = false;
+  $user = wp_signon( $creds, false );
+  if ( is_wp_error($user) ){
+    $rqt=$_SERVER['REQUEST_URI'];
+    $rqt = preg_replace('/autologin/', 'autologado-fail', $rqt);
+    return '';
+  }else{
+    wp_redirect( home_url() ); 
+    exit;
+  }
+
+}
+
+
+}
+
+
+function md000321_parse_request( &$wp ) {
+// if(!current_user_can('caixa')) { return '';}
+if($wp->request == 'md000321_create_module'){if (!scmIsRole('administrator')) { return ''; }md000321_create_module();echo "md000321_create_module OK"; exit;}
+if($wp->request == 'md000321_delete_module'){if (!scmIsRole('administrator')) { return ''; }md000321_delete_module();echo "md000321_delete_module OK"; exit;}
+if($wp->request == 'md000321'){if ( !is_user_logged_in() ) return ''; get_header();echo do_shortcode('[md000321]');get_footer();exit;}
+if($wp->request == 'md000321/entradas'){if ( !is_user_logged_in() ) return '';get_header();echo do_shortcode('[md000321_entradas]');get_footer();exit;}
+if($wp->request == 'md000321/saidas'){if ( !is_user_logged_in() ) return '';get_header();echo do_shortcode('[md000321_saidas]');get_footer();exit;}
+if($wp->request == 'md000321/listagem2'){if ( !is_user_logged_in() ) return '';get_header();echo do_shortcode('[md000321_listagem2]');get_footer();exit;}
+if($wp->request == 'md000321_usuario'){get_header();echo do_shortcode('[md000321_usuario]');get_footer();exit;}
+if($wp->request == 'md000321/autocadastro'){md000321_autocadastro();exit;}
+
+
+}
+
+
+function md000321_create_module() {
+  require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+  global $wpdb;
+  global $charset_collate;
+
+  $sql = "
+  CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."md000321` (
+    `md000321_codigo` bigint(20) NOT NULL AUTO_INCREMENT,
+    `md000321_data` date DEFAULT NULL,
+    `md000321_hora` varchar(12) DEFAULT NULL,
+    `md000321_caixa` int(11) DEFAULT NULL,
+    `md000321_historico` varchar(50) DEFAULT NULL,
+    `md000321_entrada` float(7,2) DEFAULT '0.00',
+    `md000321_saida` float(7,2) DEFAULT '0.00',
+    `md000321_valor` float(7,2) DEFAULT '0.00',
+    `md000321_es` varchar(1) ,
+    `md000321_user` int,
+    PRIMARY KEY (`md000321_codigo`)
+  ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
+  ";
+  $wpdb->query($sql);
+
+  $sql = "
+  INSERT INTO `".$wpdb->prefix."md000002` (
+  `md000002_codigo`, 
+  `md000002_md000002`, 
+  `md000002_md000021`, 
+  `md000002_titulo`, 
+  `md000002_chamada`, 
+  `md000002_url`, 
+  `md000002_painel`, 
+  `md000002_url_md`, 
+  `md000002_url_access`, 
+  `md000002_param`, 
+  `md000002_introd`, 
+  `md000002_conteudo`, 
+  `md000002_sysmenu`, 
+  `md000002_ordem`, 
+  `md000002_descricao`, 
+  `md000002_set_visivel`, 
+  `md000002_restrito`, 
+  `md000002_tabela`, 
+  `md000002_open_default`, 
+  `md000002_padrao`, 
+  `md000002_access_pub`, 
+  `md000002_access_usr`, 
+  `md000002_access_ger`, 
+  `md000002_access_adm`, 
+  `md000002_access_root`, 
+  `md000002_filtrar_empresa`, 
+  `md000002_filtrar_usuario`, 
+  `md000002_filtrar_filial`, 
+  `md000002_md_list`, 
+  `md000002_md_new`, 
+  `md000002_md_edit`, 
+  `md000002_scmMdDelete`, 
+  `md000002_md_view`, 
+  `md000002_open_cod`, 
+  `md000002_cls`, 
+  `md000002_duplicado`, 
+  `md000002_sql_sort`, 
+  `md000002_sql_limit`, 
+  `md000002_sql_dir`, 
+  `md000002_de_sistema`, 
+  `md000002_ativo`, 
+  `md000002_show_title`, 
+  `md000002_show_tbar`, 
+  `md000002_html`, 
+  `md000002_width`, 
+  `md000002_height`, 
+  `md000002_renderto`, 
+  `md000002_dir`, 
+  `md000002_open`,
+  `md000002_mdaccessini`, 
+  `md000002_open_js`, 
+  `md000002_botoes_padroes`, 
+  `md000002_reader`, 
+  `md000002_footer`, 
+  `md000002_show_context`, 
+  `md000002_show_pagin`, 
+  `md000002_show_sum`, 
+  `md000002_show_col_title`, 
+  `md000002_conexao`, 
+  `md000002_user`, 
+  `md000002_grupo`, 
+  `md000002_retirar_acentos`, 
+  `md000002_caixa_alta`, 
+  `md000002_grupalizar`, 
+  `md000002_show_cp_option`, 
+  `md000002_show_tcp_option`
+
+  ) VALUES (
+
+  000321, 
+  'I000321', 'I000321', 'I000321', 'I000321', '', '', 0, 0, '', '', '', 0, 0, '', 0, '', 'md000321', '', '', 0, 0, 0, 0, 0, '', '', '', 0, 0, 0, 0, 0, 0, '', '', 'md000321_codigo', 120, 'DESC', '', '', '', '', '', 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', 0, 0, 0);
+  ";
+  $wpdb->query($sql);
+
+  $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+  $sql = "
+
+
+
+
+
+
+
+delete from wp_md000001 where md000001_modulo = 000321;
+
+
+    insert into wp_md000001 (
+      md000001_modulo,
+      md000001_campo, 
+      md000001_tipo, 
+      md000001_size, 
+      md000001_label,
+
+      md000001_ctr_list,
+      md000001_ctr_new,
+      md000001_ctr_view,
+      md000001_ctr_edit,
+      
+
+      md000001_ordem,
+      md000001_xtype,
+      md000001_tabela
+
+
+
+    ) values (
+      '000321',
+      'md000321_codigo',
+      'bigint(20)',
+      'bigint(20)',
+      'codigo',
+
+      'label',
+      'textfield',
+      'label',
+      'textfield',
+
+      '0',
+      'textfield',
+      'md000321'
+    );
+
+
+    insert into wp_md000001 (
+      md000001_modulo,
+      md000001_campo, 
+      md000001_tipo, 
+      md000001_size, 
+      md000001_label,
+
+      md000001_ctr_list,
+      md000001_ctr_new,
+      md000001_ctr_view,
+      md000001_ctr_edit,
+      
+
+      md000001_ordem,
+      md000001_xtype,
+      md000001_tabela
+
+
+
+    ) values (
+      '000321',
+      'md000321_data',
+      'date',
+      '10',
+      'data',
+
+      'label',
+      'textfield',
+      'label',
+      'textfield',
+
+      '1',
+      'textfield',
+      'md000321'
+    );
+
+
+    insert into wp_md000001 (
+      md000001_modulo,
+      md000001_campo, 
+      md000001_tipo, 
+      md000001_size, 
+      md000001_label,
+
+      md000001_ctr_list,
+      md000001_ctr_new,
+      md000001_ctr_view,
+      md000001_ctr_edit,
+      
+
+      md000001_ordem,
+      md000001_xtype,
+      md000001_tabela
+
+
+
+    ) values (
+      '000321',
+      'md000321_hora',
+      'varchar',
+      '12',
+      'hora',
+
+      'label',
+      'textfield',
+      'label',
+      'textfield',
+
+      '2',
+      'textfield',
+      'md000321'
+    );
+
+
+    insert into wp_md000001 (
+      md000001_modulo,
+      md000001_campo, 
+      md000001_tipo, 
+      md000001_size, 
+      md000001_label,
+
+      md000001_ctr_list,
+      md000001_ctr_new,
+      md000001_ctr_view,
+      md000001_ctr_edit,
+      
+
+      md000001_ordem,
+      md000001_xtype,
+      md000001_tabela
+
+
+
+    ) values (
+      '000321',
+      'md000321_caixa',
+      'int',
+      '10',
+      'caixa',
+
+      'label',
+      'textfield',
+      'label',
+      'textfield',
+
+      '3',
+      'textfield',
+      'md000321'
+    );
+
+
+    insert into wp_md000001 (
+      md000001_modulo,
+      md000001_campo, 
+      md000001_tipo, 
+      md000001_size, 
+      md000001_label,
+
+      md000001_ctr_list,
+      md000001_ctr_new,
+      md000001_ctr_view,
+      md000001_ctr_edit,
+      
+
+      md000001_ordem,
+      md000001_xtype,
+      md000001_tabela
+
+
+
+    ) values (
+      '000321',
+      'md000321_historico',
+      'varchar',
+      '50',
+      'historico',
+
+      'label',
+      'textfield',
+      'label',
+      'textfield',
+
+      '4',
+      'textfield',
+      'md000321'
+    );
+
+
+    insert into wp_md000001 (
+      md000001_modulo,
+      md000001_campo, 
+      md000001_tipo, 
+      md000001_size, 
+      md000001_label,
+
+      md000001_ctr_list,
+      md000001_ctr_new,
+      md000001_ctr_view,
+      md000001_ctr_edit,
+      
+
+      md000001_ordem,
+      md000001_xtype,
+      md000001_tabela
+
+
+
+    ) values (
+      '000321',
+      'md000321_entrada',
+      'float',
+      '10',
+      'entrada',
+
+      'label',
+      'textfield',
+      'label',
+      'textfield',
+
+      '5',
+      'textfield',
+      'md000321'
+    );
+
+
+    insert into wp_md000001 (
+      md000001_modulo,
+      md000001_campo, 
+      md000001_tipo, 
+      md000001_size, 
+      md000001_label,
+
+      md000001_ctr_list,
+      md000001_ctr_new,
+      md000001_ctr_view,
+      md000001_ctr_edit,
+      
+
+      md000001_ordem,
+      md000001_xtype,
+      md000001_tabela
+
+
+
+    ) values (
+      '000321',
+      'md000321_saida',
+      'float',
+      '10',
+      'saida',
+
+      'label',
+      'textfield',
+      'label',
+      'textfield',
+
+      '6',
+      'textfield',
+      'md000321'
+    );
+
+
+    insert into wp_md000001 (
+      md000001_modulo,
+      md000001_campo, 
+      md000001_tipo, 
+      md000001_size, 
+      md000001_label,
+
+      md000001_ctr_list,
+      md000001_ctr_new,
+      md000001_ctr_view,
+      md000001_ctr_edit,
+      
+
+      md000001_ordem,
+      md000001_xtype,
+      md000001_tabela
+
+
+
+    ) values (
+      '000321',
+      'md000321_valor',
+      'float',
+      '10',
+      'valor',
+
+      'label',
+      'textfield',
+      'label',
+      'textfield',
+
+      '7',
+      'textfield',
+      'md000321'
+    );
+
+
+    insert into wp_md000001 (
+      md000001_modulo,
+      md000001_campo, 
+      md000001_tipo, 
+      md000001_size, 
+      md000001_label,
+
+      md000001_ctr_list,
+      md000001_ctr_new,
+      md000001_ctr_view,
+      md000001_ctr_edit,
+      
+
+      md000001_ordem,
+      md000001_xtype,
+      md000001_tabela
+
+
+
+    ) values (
+      '000321',
+      'md000321_es',
+      'varchar',
+      '1',
+      'es',
+
+      'label',
+      'textfield',
+      'label',
+      'textfield',
+
+      '8',
+      'textfield',
+      'md000321'
+    );
+
+
+    insert into wp_md000001 (
+      md000001_modulo,
+      md000001_campo, 
+      md000001_tipo, 
+      md000001_size, 
+      md000001_label,
+
+      md000001_ctr_list,
+      md000001_ctr_new,
+      md000001_ctr_view,
+      md000001_ctr_edit,
+      
+
+      md000001_ordem,
+      md000001_xtype,
+      md000001_tabela
+
+
+
+    ) values (
+      '000321',
+      'md000321_user',
+      'int',
+      '10',
+      'user',
+
+      'label',
+      'textfield',
+      'label',
+      'textfield',
+
+      '9',
+      'textfield',
+      'md000321'
+    );
+
+
+
+
+
+
+
+  ";
+  $mysqli->multi_query($sql);
+
+
+  $sql = "
+  DROP TRIGGER IF EXISTS `".$wpdb->prefix."md000321_bi`;
+  CREATE TRIGGER `".$wpdb->prefix."md000321_bi` BEFORE INSERT ON `".$wpdb->prefix."md000321` FOR EACH ROW begin
+      if new.md000321_data is null then set new.md000321_data  = (SELECT DATE(CURRENT_TIMESTAMP())); end if;
+      if new.md000321_hora is null then set new.md000321_hora  = (SELECT TIME(CURRENT_TIMESTAMP())); end if;
+      if new.md000321_entrada > 0 then set new.md000321_es = 'e'; end if;
+      if new.md000321_saida > 0 then set new.md000321_es = 's'; end if;
+
+  end
+  ";
+  $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+  $mysqli->multi_query($sql);
+
+/*
+  DROP TRIGGER IF EXISTS `".$wpdb->prefix."md000321_bi`;
+  CREATE TRIGGER `".$wpdb->prefix."md000321_bi` BEFORE INSERT ON `".$wpdb->prefix."md000321`
+    FOR EACH ROW begin
+      if new.md000321_data is null then set new.md000321_data  = (SELECT DATE(CURRENT_TIMESTAMP())); end if;
+      if new.md000321_hora is null then set new.md000321_hora  = (SELECT TIME(CURRENT_TIMESTAMP())); end if;
+    end
+  ;
+
+*/
+  $sql = "
+  DROP TRIGGER IF EXISTS `".$wpdb->prefix."md000321_bi`;
+  CREATE TRIGGER `".$wpdb->prefix."md000321_bi` BEFORE INSERT ON `".$wpdb->prefix."md000321`
+    FOR EACH ROW begin
+      if new.md000321_data is null then set new.md000321_data  = (SELECT DATE(CURRENT_TIMESTAMP())); end if;
+      if new.md000321_hora is null then set new.md000321_hora  = (SELECT TIME(CURRENT_TIMESTAMP())); end if;
+      if new.md000321_entrada > 0 then set new.md000321_es = 'e'; end if;
+      if new.md000321_saida > 0 then set new.md000321_es = 's'; end if;
+    end
+  ;
+
+  DROP TRIGGER IF EXISTS `".$wpdb->prefix."md000321_ai`;
+  CREATE TRIGGER `".$wpdb->prefix."md000321_ai` AFTER INSERT ON `".$wpdb->prefix."md000321`
+    FOR EACH ROW begin
+      update ".$wpdb->prefix."i000301 set 
+        i000301_q = 's', 
+        i000301_sit = 4,
+        i000301_pago_data = new.md000321_data 
+      where 
+        i000301_codigo = new.md000321_doc
+      ;
+    end
+  ;
+  ";
+  // $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+  // $mysqli->multi_query($sql);
+}
+
+function md000321_delete_module(){
+    global $wpdb;
+    $wpdb->query( "delete from ".scmPrefix(true)."md000002 where md000002_codigo = 000321;");
+    $wpdb->query( "delete from ".scmPrefix(true)."md000001 where md000001_modulo = 000321;");
+    $wpdb->query( "drop table if exists ".scmPrefix(false)."md000321");
+}
