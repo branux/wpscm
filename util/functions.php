@@ -4541,3 +4541,98 @@ function scm_show_login($atts, $content = null){
     return '<a href="/login/">'.$usuario.' </a>';
 }
 add_shortcode("scm_show_login", "scm_show_login");
+
+
+function scm_create_fields($md) {
+  // if ( !is_user_logged_in() ) return "";
+  if(!$md) {echo 'md'; exit;}
+  $md = $md;
+  $tabela   = 'md'.$md;
+  global $wpdb;
+  if(!$md) die();
+  $sql = "SHOW COLUMNS FROM ".$wpdb->prefix.$tabela;
+  $tb = scmDbExe($sql,'rows');
+  $tabela_len = strlen($tabela);
+  $sql_name = "";
+  $sql_value = "";
+  // echo '<pre>';
+  $sql = "delete from ".$wpdb->prefix."md000001 where md000001_modulo = ".$md.";\n";
+  $campos = array();
+  for ($i=0; $i < $tb['r']; $i++) {
+    $tb['rows'][$i]['label']  = $tb['rows'][$i]['Field'];
+    $tb['rows'][$i]['tam']  = 10;
+    $tb['rows'][$i]['tipo']  = 'string';
+    $ctr_new = 'textfield';
+    $ctr_edit = 'textfield';
+    if(substr($tb['rows'][$i]['Type'], 0, 7) == 'varchar'){
+      $tb['rows'][$i]['tipo']  = 'string';
+      $tb['rows'][$i]['tam']  = 50;
+    }
+    if(substr($tb['rows'][$i]['Type'], 0, 5) == 'float'){
+      $tb['rows'][$i]['tipo']  = 'float';
+      $tb['rows'][$i]['tam']  = 20;
+    }
+    if(substr($tb['rows'][$i]['Type'], 0, 4) == 'date'){
+     $tb['rows'][$i]['tipo']  = 'date'; 
+     $tb['rows'][$i]['tam']  = 20;
+    }
+    if(substr($tb['rows'][$i]['Type'], 0, 3) == 'int'){
+     $tb['rows'][$i]['tipo']  = 'int';
+     $tb['rows'][$i]['tam']  = 20;
+    }
+    if(substr($tb['rows'][$i]['Type'], 0, 4) == 'text'){
+      $tb['rows'][$i]['tipo']  = 'blob';
+      $tb['rows'][$i]['tam']  = 50;
+
+      $ctr_new = 'textarea';
+      $ctr_edit = 'textarea';
+
+    }
+    $sql .= "
+      insert into ".$wpdb->prefix."md000001 (
+        md000001_tipo, 
+        md000001_ctr_new,
+        md000001_ctr_edit,
+        md000001_ctr_view, 
+        md000001_ctr_list, 
+
+        md000001_modulo, 
+        md000001_ordem, 
+        md000001_xtype, 
+
+        md000001_campo, 
+        md000001_label, 
+        md000001_ativo, 
+
+        md000001_size, 
+        md000001_black, 
+        md000001_tabela
+      
+      ) values (
+
+        '".$tb['rows'][$i]['tipo']."', 
+        '".$ctr_new."', 
+        '".$ctr_edit."', 
+        'label', 
+        'label', 
+
+        ".$md.", 
+        ".$i.", 
+        'textfield', 
+
+        '".$tb['rows'][$i]['Field']."',  
+        '".substr($tb['rows'][$i]['Field'], 9) ."', 
+        's', 
+
+        ".$tb['rows'][$i]['tam'].", 
+        1, 
+        'md".$md."'
+      );
+    ";
+    
+  }
+  // echo $sql;
+  $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+  $mysqli->multi_query($sql);
+
+}

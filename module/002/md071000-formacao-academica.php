@@ -6,7 +6,7 @@ function md071000_parse_request( &$wp ) {
         $key = isset($_GET['scmkey']) ? $_GET['scmkey'] : '';$go = 0;if (scmIsRole('administrator')) $go = 1;if ($key==SCMKEY) $go = 1;if (!$go) return '';
         
         md071000_create_module();
-        idados_create_fields("071000");
+        scm_create_fields("071000");
 
         echo "md071000_create_module OK";
         exit;
