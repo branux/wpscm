@@ -1,13 +1,13 @@
 <?php 
 function md000001_parse_request( &$wp ) {
     if(($wp->request == 'md000001_create_module') ) {
-        if (!scmIsRole('administrator')) { return ''; }
+        $key = isset($_GET['scmkey']) ? $_GET['scmkey'] : '';$go = 0;if (scmIsRole('administrator')) $go = 1;if ($key==SCMKEY) $go = 1;if (!$go) return '';
         md000001_create_module();
         echo "md000001_create_module OK";
         exit;
     }
     if(($wp->request == 'md000001_delete_module') ) {
-        if (!scmIsRole('administrator')) { return ''; }
+        $key = isset($_GET['scmkey']) ? $_GET['scmkey'] : '';$go = 0;if (scmIsRole('administrator')) $go = 1;if ($key==SCMKEY) $go = 1;if (!$go) return '';
         md000001_delete_module();
         echo "md000001_delete_module OK";
         exit;
