@@ -3,7 +3,7 @@
 Plugin Name: Wp Sistema CRUD Modulado
 Plugin URI: https://github.com/edinaldohvieira/wpscm
 Description: Controle várias tabelas externas dentro de uma instalação do WordPress.
-Version: 0.2.0
+Version: 0.3.0
 Author: Edinaldo H Vieira
 Author URI: https://github.com/edinaldohvieira/
 Charge log: Compatibilodade com github
